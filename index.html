@@ -8,13 +8,13 @@
 :root{--bg:#f5f2ef;--card:#fff;--text:#3d3533;--text2:#8a7e7a;--border:#e8e3df;--primary:#e8734a;--primary-light:#fef0ea;--shooting:#e8734a;--shooting-bg:#fef0ea;--selection:#3b8ecc;--selection-bg:#edf5fb;--daily:#4a9e6e;--daily-bg:#edf7f1;--holiday-bg:#fff3e0;--today-bg:#fff8f0;--shadow:0 1px 3px rgba(0,0,0,.06);--radius:10px;--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent}
-
-/* 配置引导页 */
+/* 配置页 */
 .setup-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .setup-card{background:var(--card);border-radius:16px;padding:28px 22px;width:100%;max-width:400px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
 .setup-card h2{font-size:18px;margin-bottom:6px}.setup-card h2 span{color:var(--primary)}
 .setup-card .step{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7}
 .setup-card .step a{color:var(--primary)}
+.setup-card .step b{color:var(--text)}
 .setup-card label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px}
 .setup-card input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;margin-bottom:10px;background:#faf9f8;outline:none;font-family:var(--font)}
 .setup-card input:focus{border-color:var(--primary);background:#fff}
@@ -22,8 +22,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .setup-card .setup-btn:active{background:#d4653d}
 .setup-card .hint{font-size:11px;color:var(--text2);margin-top:8px;line-height:1.6}
 .setup-card .hint code{background:#f0ece8;padding:1px 5px;border-radius:3px;font-size:11px}
-.setup-card .sql-block{background:#2d2d2d;color:#e0e0e0;padding:12px;border-radius:8px;font-size:11px;line-height:1.5;overflow-x:auto;margin:8px 0;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
-
+.sql-block{background:#2d2d2d;color:#e0e0e0;padding:12px;border-radius:8px;font-size:11px;line-height:1.5;overflow-x:auto;margin:8px 0;white-space:pre-wrap;word-break:break-all;max-height:160px;overflow-y:auto}
 /* 登录 */
 .auth-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .auth-card{background:var(--card);border-radius:16px;padding:28px 22px;width:100%;max-width:360px;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
@@ -37,7 +36,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .auth-btn{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}
 .auth-btn:active{background:#d4653d}
 .err{color:#c0392b;font-size:13px;margin-top:8px;min-height:20px}
-
 /* 主界面 */
 .app{display:none;flex-direction:column;min-height:100vh}
 .app.active{display:flex}
@@ -46,7 +44,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .user-row{display:flex;align-items:center;gap:8px}
 .user-tag{font-size:12px;background:var(--primary-light);color:var(--primary);padding:3px 10px;border-radius:10px;font-weight:600}
 .logout-btn{font-size:12px;color:var(--text2);border:none;background:none;cursor:pointer}
-.btn{padding:7px 13px;border-radius:18px;font-size:12px;font-weight:600;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;white-space:nowrap;transition:background .12s}
+.btn{padding:7px 13px;border-radius:18px;font-size:12px;font-weight:600;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;white-space:nowrap}
 .btn:active{background:#f5f2ef}
 .btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}.btn-primary:active{background:#d4653d}
 .month-nav{display:flex;align-items:center;justify-content:center;padding:12px 14px 6px;gap:12px;flex-wrap:wrap}
@@ -74,7 +72,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .period-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
 .pd-morning{background:var(--shooting)}.pd-afternoon{background:var(--selection)}.pd-fullday{background:var(--daily)}
 .more-events{font-size:9px;color:var(--text2);padding:0 3px}
-
 .detail-panel{max-width:700px;margin:0 auto;padding:0 8px 20px;display:none}
 .detail-panel.active{display:block}
 .detail-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 0 4px}
@@ -93,7 +90,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .btn-xs{padding:3px 10px;font-size:11px;border-radius:10px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text2)}
 .btn-xs.danger{color:#c0392b}
 .empty-hint{text-align:center;padding:26px 0;color:var(--text2);font-size:13px}
-
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.active{display:flex}
 .modal-sheet{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:20px 16px 28px;box-shadow:0 -4px 20px rgba(0,0,0,.1);animation:slideUp .25s ease}
@@ -119,65 +115,26 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .modal-actions .btn{flex:1;padding:11px;font-size:14px;border-radius:10px}
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
+.reconfig{text-align:center;padding:10px;font-size:11px}
+.reconfig a{color:var(--text2)}
 @media(min-width:600px){.day-cell{min-height:88px;padding:4px 4px 2px}.day-event{font-size:10px;line-height:1.4}}
 </style>
 </head>
 <body>
 
-<!-- 配置引导页 -->
+<!-- 配置页 -->
 <div class="setup-page" id="setupPage" style="display:none">
 <div class="setup-card">
-<h2>📅 <span>共享日历</span> · 首次配置</h2>
+<h2>📅 <span>共享日历</span> · 绑定腾讯云</h2>
 <div class="step">
-请先完成两个步骤：<br><br>
-<b>1.</b> 前往 <a href="https://supabase.com" target="_blank">supabase.com</a> 注册/登录，创建一个免费项目<br>
-<b>2.</b> 在项目 Settings → API 中复制 <code>Project URL</code> 和 <code>anon public key</code><br>
-<b>3.</b> 在 SQL Editor 中执行以下建表语句：
+<b>1.</b> 打开 <a href="https://console.cloud.tencent.com/tcb" target="_blank">腾讯云 CloudBase 控制台</a>，新建环境（选「按量付费」，有免费额度）<br>
+<b>2.</b> 创建后复制<b>环境 ID</b>（格式如 <code>xxx-1a2b3c</code>），粘贴到下方<br>
+<b>3.</b> 进入环境 → 数据库 → 新建集合 <code>users</code> 和 <code>events</code>，权限都设为「所有用户可读写」
 </div>
-<div class="sql-block">-- 用户表
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  username TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "users_public" ON users FOR SELECT USING (true);
-CREATE POLICY "users_insert" ON users FOR INSERT WITH CHECK (true);
-
--- 事件表
-CREATE TABLE events (
-  id TEXT PRIMARY KEY,
-  date TEXT NOT NULL,
-  period TEXT DEFAULT 'morning',
-  type TEXT DEFAULT 'shooting',
-  title TEXT NOT NULL,
-  customer_name TEXT DEFAULT '',
-  customer_phone TEXT DEFAULT '',
-  assignee TEXT DEFAULT '',
-  description TEXT DEFAULT '',
-  reminder_enabled BOOLEAN DEFAULT false,
-  reminder_minutes INTEGER DEFAULT 0,
-  reminder_notified BOOLEAN DEFAULT false,
-  created_by TEXT DEFAULT '',
-  created_at TEXT DEFAULT '',
-  time TEXT DEFAULT ''
-);
-ALTER TABLE events ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "events_public" ON events FOR ALL USING (true);
-
--- 登录验证函数
-CREATE OR REPLACE FUNCTION verify_user(uname TEXT, phash TEXT)
-RETURNS BOOLEAN AS $$
-  SELECT EXISTS(SELECT 1 FROM users WHERE username=uname AND password_hash=phash);
-$$ LANGUAGE sql SECURITY DEFINER;</div>
-<div class="step">执行完 SQL 后，填入以下两项：</div>
-<label>Supabase Project URL</label>
-<input id="supaUrl" placeholder="https://xxxxx.supabase.co">
-<label>Supabase Anon Key</label>
-<input id="supaKey" placeholder="eyJhbGciOi...">
-<button class="setup-btn" onclick="saveConfig()">开始使用</button>
-<div class="hint">配置保存在浏览器中，下次打开无需重复填写</div>
+<label>CloudBase 环境 ID</label>
+<input id="tcbEnvId" placeholder="例如：photo-1a2b3c">
+<button class="setup-btn" onclick="saveConfig()">绑定并开始使用</button>
+<div class="hint">环境 ID 在 CloudBase 控制台顶部就能看到。配置保存在浏览器中。</div>
 </div>
 </div>
 
@@ -196,7 +153,7 @@ $$ LANGUAGE sql SECURITY DEFINER;</div>
 <button class="auth-btn" onclick="doLogin()">登 录</button>
 </div>
 <div id="registerForm" style="display:none">
-<input id="regUser" placeholder="设置用户名" autocomplete="off">
+<input id="regUser" placeholder="设置用户名">
 <input id="regPass" type="password" placeholder="设置密码">
 <input id="regPass2" type="password" placeholder="确认密码">
 <button class="auth-btn" onclick="doRegister()">注 册</button>
@@ -255,106 +212,108 @@ $$ LANGUAGE sql SECURITY DEFINER;</div>
 <div class="modal-actions"><button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" id="modalSubmit" onclick="submitEvent()">保存</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
+<div class="reconfig"><a href="#" onclick="resetConfig()">重新绑定 CloudBase</a></div>
 
-<!-- 重新配置按钮 -->
-<div style="text-align:center;padding:10px"><a href="#" onclick="resetConfig()" style="font-size:11px;color:var(--text2)">重新配置Supabase</a></div>
+<!-- CloudBase SDK -->
+<script src="https://imgcache.qq.com/qcloud/cloudbase-js-sdk/1.8.0/cloudbase.full.js"></script>
 
 <script>
-// ====== Supabase REST API 封装 ======
-let SUPABASE_URL = '';
-let SUPABASE_KEY = '';
+// ====== CloudBase 初始化 ======
+let db = null;
+let TCB_ENV = '';
 
-function supaFetch(path, options={}){
-  const url = SUPABASE_URL + '/rest/v1' + path;
-  const headers = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_KEY,
-    'Content-Type': 'application/json',
-    ...(options.headers||{})
-  };
-  if(options.body) headers['Prefer'] = 'return=representation';
-  return fetch(url, {...options, headers}).then(r=>{
-    if(!r.ok) throw new Error(r.status+' '+r.statusText);
-    const ct = r.headers.get('content-type')||'';
-    return ct.includes('json') ? r.json() : r.text();
+function initTCB(envId){
+  return new Promise((resolve,reject)=>{
+    if(!window.cloudbase){reject('SDK 加载失败，请检查网络');return}
+    const app = cloudbase.init({env:envId});
+    const auth = app.auth({persistence:'local'});
+    auth.anonymousAuthProvider().signIn().then(()=>{
+      db = app.database();
+      // 建集合（如果不存在会自动创建）
+      // 设置索引等
+      resolve();
+    }).catch(err=>{
+      // 匿名登录可能被禁用，尝试直接用数据库
+      db = app.database();
+      resolve();
+    });
   });
 }
 
 // ====== 配置检测 ======
 function checkConfig(){
-  SUPABASE_URL = localStorage.getItem('supa_url')||'';
-  SUPABASE_KEY = localStorage.getItem('supa_key')||'';
-  if(!SUPABASE_URL||!SUPABASE_KEY||SUPABASE_URL==='__URL__'){
+  TCB_ENV = localStorage.getItem('tcb_env')||'';
+  if(!TCB_ENV){
     document.getElementById('setupPage').style.display='flex';
     document.getElementById('authPage').style.display='none';
-    document.getElementById('app').classList.remove('active');
     return false;
   }
   document.getElementById('setupPage').style.display='none';
   return true;
 }
 
-window.saveConfig = function(){
-  const url=document.getElementById('supaUrl').value.trim();
-  const key=document.getElementById('supaKey').value.trim();
-  if(!url||!key)return;
-  localStorage.setItem('supa_url',url);
-  localStorage.setItem('supa_key',key);
-  SUPABASE_URL=url; SUPABASE_KEY=key;
-  document.getElementById('setupPage').style.display='none';
-  document.getElementById('authPage').style.display='flex';
-  init();
+window.saveConfig = async function(){
+  const envId = document.getElementById('tcbEnvId').value.trim();
+  if(!envId)return toast('请输入环境 ID');
+  try{
+    await initTCB(envId);
+    localStorage.setItem('tcb_env',envId);
+    TCB_ENV=envId;
+    document.getElementById('setupPage').style.display='none';
+    document.getElementById('authPage').style.display='flex';
+    init();
+  }catch(e){
+    toast('连接失败：'+e.message);
+  }
 };
 
 window.resetConfig = function(){
-  localStorage.removeItem('supa_url');
-  localStorage.removeItem('supa_key');
-  localStorage.removeItem('cal_user');
+  localStorage.removeItem('tcb_env');localStorage.removeItem('cal_user');
   document.getElementById('app').classList.remove('active');
   document.getElementById('authPage').style.display='none';
   checkConfig();
 };
 
 // ====== 状态 ======
-let curY, curM, selDate = null, editingId = null;
-let curType = 'shooting', curPeriod = 'morning';
-let allEvents = [], allUsers = [];
-let currentUser = null;
+let curY, curM, selDate = null, editingId = null, curType = 'shooting', curPeriod = 'morning';
+let allEvents = [], allUsers = [], currentUser = null;
 
 const HOLIDAYS = {"2026-01-01":"元旦","2026-01-02":"元旦","2026-01-03":"元旦","2026-02-15":"春节","2026-02-16":"除夕","2026-02-17":"春节","2026-02-18":"春节","2026-02-19":"春节","2026-02-20":"春节","2026-02-21":"春节","2026-04-04":"清明节","2026-04-05":"清明节","2026-04-06":"清明节","2026-05-01":"劳动节","2026-05-02":"劳动节","2026-05-03":"劳动节","2026-05-04":"劳动节","2026-05-05":"劳动节","2026-05-30":"端午节","2026-05-31":"端午节","2026-06-01":"端午节","2026-09-25":"中秋节","2026-10-01":"国庆节","2026-10-02":"国庆节","2026-10-03":"国庆节","2026-10-04":"国庆节","2026-10-05":"国庆节","2026-10-06":"国庆节","2026-10-07":"国庆节","2026-10-08":"国庆节"};
-
 const today = new Date();
 const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
 
 // ====== 启动 ======
-if(!checkConfig()){}else{init()}
+(async function(){
+  if(!checkConfig())return;
+  try{await initTCB(TCB_ENV);}catch(e){toast('CloudBase 连接失败');return}
+  init();
+})();
 
 function init(){
-  const user = localStorage.getItem('cal_user');
-  if(user){ currentUser=user; enterApp(); }
-  else{ document.getElementById('authPage').style.display='flex'; }
+  const u=localStorage.getItem('cal_user');
+  if(u){currentUser=u;enterApp()}else{document.getElementById('authPage').style.display='flex'}
 }
 
 // ====== 登录/注册 ======
-window.switchTab = function(tab){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(tab==='login'&&i===0)||(tab==='register'&&i===1)));
-  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
-  document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+window.switchTab=function(t){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(t==='login'&&i===0)||(t==='register'&&i===1)));
+  document.getElementById('loginForm').style.display=t==='login'?'block':'none';
+  document.getElementById('registerForm').style.display=t==='register'?'block':'none';
   document.getElementById('authErr').textContent='';
 };
 
-window.doLogin = async function(){
-  const u=document.getElementById('loginUser').value.trim(), p=document.getElementById('loginPass').value.trim();
+window.doLogin=async function(){
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();
   if(!u||!p){document.getElementById('authErr').textContent='请填写用户名和密码';return}
   try{
-    const hash = await sha256(p);
-    const res = await supaFetch('/rpc/verify_user',{method:'POST',body:JSON.stringify({uname:u,phash:hash})});
-    if(!res){document.getElementById('authErr').textContent='用户名或密码错误';return}
+    const hash=await sha256(p);
+    const res=await db.collection('users').where({username:u,password_hash:hash}).get();
+    if(!res.data||res.data.length===0){document.getElementById('authErr').textContent='用户名或密码错误';return}
     currentUser=u;localStorage.setItem('cal_user',u);enterApp();
-  }catch(e){document.getElementById('authErr').textContent='登录失败，请检查网络或Supabase配置';}
+  }catch(e){document.getElementById('authErr').textContent='登录失败：'+e.message}
 };
 
-window.doRegister = async function(){
+window.doRegister=async function(){
   const u=document.getElementById('regUser').value.trim();
   const p=document.getElementById('regPass').value.trim();
   const p2=document.getElementById('regPass2').value.trim();
@@ -362,51 +321,45 @@ window.doRegister = async function(){
   if(p!==p2){document.getElementById('authErr').textContent='两次密码不一致';return}
   if(p.length<3){document.getElementById('authErr').textContent='密码至少3位';return}
   try{
-    const {data:exist} = await supaFetch('/users?select=id&username=eq.'+encodeURIComponent(u));
-    if(exist&&exist.length>0){document.getElementById('authErr').textContent='用户名已存在';return}
-    const hash = await sha256(p);
-    await supaFetch('/users',{method:'POST',body:JSON.stringify({username:u,password_hash:hash})});
+    const exist=await db.collection('users').where({username:u}).get();
+    if(exist.data&&exist.data.length>0){document.getElementById('authErr').textContent='用户名已存在';return}
+    const hash=await sha256(p);
+    await db.collection('users').add({username:u,password_hash:hash,created_at:new Date().toISOString()});
     currentUser=u;localStorage.setItem('cal_user',u);enterApp();
-  }catch(e){document.getElementById('authErr').textContent='注册失败，请检查网络或Supabase配置';}
+  }catch(e){document.getElementById('authErr').textContent='注册失败：'+e.message}
 };
 
 async function sha256(m){const e=new TextEncoder();const d=await crypto.subtle.digest('SHA-256',e.encode(m));return Array.from(new Uint8Array(d)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 document.getElementById('regPass2').addEventListener('keydown',e=>{if(e.key==='Enter')doRegister()});
 
-window.logout = function(){
-  currentUser=null;localStorage.removeItem('cal_user');
-  document.getElementById('app').classList.remove('active');document.getElementById('authPage').style.display='flex';
-};
+window.logout=function(){currentUser=null;localStorage.removeItem('cal_user');document.getElementById('app').classList.remove('active');document.getElementById('authPage').style.display='flex'};
 
 // ====== 进入主界面 ======
 async function enterApp(){
   document.getElementById('authPage').style.display='none';document.getElementById('app').classList.add('active');
   document.getElementById('currentUserTag').textContent=currentUser;
   curY=today.getFullYear();curM=today.getMonth();
-  await loadUsers();
-  await fetchEvents();
-  startReminderChecker();
+  await loadUsers();await fetchEvents();startReminderChecker();
 }
 
 async function loadUsers(){
   try{
-    const data = await supaFetch('/users?select=username');
-    allUsers = (data||[]).map(u=>u.username);
+    const res=await db.collection('users').field({username:true}).get();
+    allUsers=(res.data||[]).map(u=>u.username);
     const sel=document.getElementById('fAssignee');
     sel.innerHTML='<option value="">不指定</option>'+allUsers.map(u=>`<option value="${u}">${u}</option>`).join('');
-  }catch(e){}
+  }catch(e){console.error(e)}
 }
 
 async function fetchEvents(){
-  const monthStr=`${curY}-${String(curM+1).padStart(2,'0')}`;
+  const ms=`${curY}-${String(curM+1).padStart(2,'0')}`;
   try{
-    const data = await supaFetch(`/events?select=*&date=gte.${monthStr}-01&date=lte.${monthStr}-31`);
-    allEvents = data||[];
+    const res=await db.collection('events')
+      .where({date:db.RegExp({regexp:`${ms}-\\d+`,options:'i'})}).get();
+    allEvents=res.data||[];
   }catch(e){allEvents=[]}
-  render();
-  if(selDate) showDetail(selDate);
+  render();if(selDate)showDetail(selDate);
 }
 
 // ====== 渲染 ======
@@ -421,50 +374,42 @@ function render(){
     const dayEvents=allEvents.filter(e=>e.date===ds);
     const isToday=ds===todayStr,isSel=ds===selDate;
     let cls='day-cell';if(isToday)cls+=' today';if(isSel)cls+=' selected';if(HOLIDAYS[ds])cls+=' holiday';
-    let evHtml='';
-    const deClass={shooting:'de-shooting',selection:'de-selection',daily:'de-daily'};
-    const pdClass={morning:'pd-morning',afternoon:'pd-afternoon',fullday:'pd-fullday'};
-    const morning=dayEvents.filter(e=>e.period==='morning');
-    const afternoon=dayEvents.filter(e=>e.period==='afternoon');
-    const fullday=dayEvents.filter(e=>e.period==='fullday');
-    function renderGroup(evs){
-      let h='';const show=evs.slice(0,2);
-      show.forEach(e=>{let label=e.customer_name||e.title;if(label.length>5)label=label.slice(0,4)+'…';if(e.assignee)label+=' @'+e.assignee.slice(0,3);h+=`<div class="day-event ${deClass[e.type]||''}"><span class="period-dot ${pdClass[e.period]||''}"></span>${escHtml(label)}</div>`});
+    const dc={shooting:'de-shooting',selection:'de-selection',daily:'de-daily'};
+    const pc={morning:'pd-morning',afternoon:'pd-afternoon',fullday:'pd-fullday'};
+    function rg(evs){
+      let h='';const s=evs.slice(0,2);
+      s.forEach(e=>{let l=e.customer_name||e.title;if(l.length>5)l=l.slice(0,4)+'…';if(e.assignee)l+=' @'+e.assignee.slice(0,3);h+=`<div class="day-event ${dc[e.type]||''}"><span class="period-dot ${pc[e.period]||''}"></span>${escHtml(l)}</div>`});
       if(evs.length>2)h+=`<div class="more-events">+${evs.length-2}条</div>`;
       return h;
     }
-    evHtml=renderGroup(morning)+renderGroup(afternoon)+renderGroup(fullday);
-    const holTag=HOLIDAYS[ds]?`<span class="holiday-tag">休</span>`:'';
-    html+=`<div class="${cls}" data-date="${ds}" onclick="onDateClick('${ds}')"><div class="day-num">${d}${holTag}</div><div class="day-events">${evHtml}</div></div>`;
+    const ev=rg(dayEvents.filter(e=>e.period==='morning'))+rg(dayEvents.filter(e=>e.period==='afternoon'))+rg(dayEvents.filter(e=>e.period==='fullday'));
+    const ht=HOLIDAYS[ds]?`<span class="holiday-tag">休</span>`:'';
+    html+=`<div class="${cls}" data-date="${ds}" onclick="onDateClick('${ds}')"><div class="day-num">${d}${ht}</div><div class="day-events">${ev}</div></div>`;
   }
   const total=startDow+dim,rem=total%7===0?0:7-(total%7);
   for(let i=1;i<=rem;i++)html+=`<div class="day-cell other-month">${i}</div>`;
   document.getElementById('daysGrid').innerHTML=html;
 }
-
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
-// ====== 详情 ======
 window.onDateClick=function(ds){selDate=ds;render();showDetail(ds)};
 window.closeDetail=function(){selDate=null;document.getElementById('detailPanel').classList.remove('active');render()};
 
 function showDetail(ds){
-  const panel=document.getElementById('detailPanel'),list=document.getElementById('eventList');
-  document.getElementById('detailDate').textContent=ds+(HOLIDAYS[ds]?'  🏖'+HOLIDAYS[ds]:'');
-  const dayEvents=allEvents.filter(e=>e.date===ds);
-  dayEvents.sort((a,b)=>{const o={morning:0,afternoon:1,fullday:2};return(o[a.period]??0)-(o[b.period]??0)});
-  if(!dayEvents.length){list.innerHTML=`<div class="empty-hint">暂无安排<br><button class="btn btn-primary" style="margin-top:8px" onclick="openAddModal()">+ 添加事件</button></div>`;}
+  const p=document.getElementById('detailPanel'),l=document.getElementById('eventList');
+  document.getElementById('detailDate').textContent=ds+(HOLIDAYS[ds]?' 🏖'+HOLIDAYS[ds]:'');
+  const de=allEvents.filter(e=>e.date===ds);
+  de.sort((a,b)=>{const o={morning:0,afternoon:1,fullday:2};return(o[a.period]??0)-(o[b.period]??0)});
+  if(!de.length){l.innerHTML=`<div class="empty-hint">暂无安排<br><button class="btn btn-primary" style="margin-top:8px" onclick="openAddModal()">+ 添加事件</button></div>`}
   else{
-    const tL={shooting:'拍摄',selection:'选片',daily:'日常工作'},pL={morning:'上午',afternoon:'下午',fullday:'全天'};
-    list.innerHTML=dayEvents.map(e=>{
-      let info='';if(e.customer_name)info+=`客户：${escHtml(e.customer_name)}`;if(e.customer_phone)info+=' · '+escHtml(e.customer_phone);
-      if(e.assignee)info+=(info?' · ':'')+'负责人：'+escHtml(e.assignee);
-      if(e.description)info+=(info?'<br>':'')+escHtml(e.description);
-      if(e.reminder_enabled){const rm={10:'提前10分钟',30:'提前30分钟',60:'提前1小时',120:'提前2小时',1440:'提前1天',4320:'提前3天'};info+=(info?'<br>':'')+'⏰ '+(rm[e.reminder_minutes]||'已设置');}
-      return`<div class="event-card ec-${e.type}"><div class="ec-top"><span class="ec-pill pill-${e.period}">${pL[e.period]}</span><span class="ec-pill pill-${e.type}">${tL[e.type]}</span><span class="ec-title">${escHtml(e.title)}</span></div><div class="ec-info">${info||'—'}</div><div class="ec-info" style="font-size:10px;color:#c0b8b4;margin-top:2px">${escHtml(e.created_by)} · ${e.created_at||''}</div><div class="ec-actions"><button class="btn-xs" onclick="editEvent('${e.id}')">编辑</button><button class="btn-xs danger" onclick="deleteEvent('${e.id}')">删除</button></div></div>`;
+    const tl={shooting:'拍摄',selection:'选片',daily:'日常工作'},pl={morning:'上午',afternoon:'下午',fullday:'全天'};
+    l.innerHTML=de.map(e=>{
+      let info='';if(e.customer_name)info+=`客户：${escHtml(e.customer_name)}`;if(e.customer_phone)info+=' · '+escHtml(e.customer_phone);if(e.assignee)info+=(info?' · ':'')+'负责人：'+escHtml(e.assignee);if(e.description)info+=(info?'<br>':'')+escHtml(e.description);
+      if(e.reminder_enabled){const rm={10:'提前10分钟',30:'提前30分钟',60:'提前1小时',120:'提前2小时',1440:'提前1天',4320:'提前3天'};info+=(info?'<br>':'')+'⏰ '+(rm[e.reminder_minutes]||'已设置')}
+      return`<div class="event-card ec-${e.type}"><div class="ec-top"><span class="ec-pill pill-${e.period}">${pl[e.period]}</span><span class="ec-pill pill-${e.type}">${tl[e.type]}</span><span class="ec-title">${escHtml(e.title)}</span></div><div class="ec-info">${info||'—'}</div><div class="ec-info" style="font-size:10px;color:#c0b8b4;margin-top:2px">${escHtml(e.created_by)} · ${e.created_at||''}</div><div class="ec-actions"><button class="btn-xs" onclick="editEvent('${e._id}')">编辑</button><button class="btn-xs danger" onclick="deleteEvent('${e._id}')">删除</button></div></div>`;
     }).join('');
   }
-  panel.classList.add('active');
+  p.classList.add('active');
 }
 
 // ====== 添加/编辑 ======
@@ -478,9 +423,8 @@ window.openAddModal=function(){
   updateTypeUI();updatePeriodUI();toggleCustomerFields();
   document.getElementById('modalOverlay').classList.add('active');
 };
-
 window.editEvent=function(id){
-  const e=allEvents.find(ev=>ev.id===id);if(!e)return;
+  const e=allEvents.find(ev=>ev._id===id);if(!e)return;
   editingId=id;curType=e.type;curPeriod=e.period;
   document.getElementById('modalTitle').textContent='编辑事件';
   document.getElementById('fDate').value=e.date;document.getElementById('fTime').value=e.time||'';
@@ -492,7 +436,6 @@ window.editEvent=function(id){
   updateTypeUI();updatePeriodUI();toggleCustomerFields();
   document.getElementById('modalOverlay').classList.add('active');
 };
-
 window.closeModal=function(){document.getElementById('modalOverlay').classList.remove('active');editingId=null};
 window.setType=function(t){curType=t;updateTypeUI();toggleCustomerFields()};
 window.setPeriod=function(p){curPeriod=p;updatePeriodUI()};
@@ -509,45 +452,31 @@ window.submitEvent=async function(){
   const date=document.getElementById('fDate').value,time=document.getElementById('fTime').value;
   const title=document.getElementById('fTitle').value.trim();
   if(!date)return toast('请选择日期');if(!title)return toast('请输入标题');
-  const remVal=parseInt(document.getElementById('fReminder').value)||0;
-  const obj={
-    date,time,title,type:curType,period:curPeriod,
-    customer_name:document.getElementById('fCustomer').value.trim(),
-    customer_phone:document.getElementById('fPhone').value.trim(),
-    assignee:document.getElementById('fAssignee').value,
-    description:document.getElementById('fDesc').value.trim(),
-    reminder_enabled:remVal>0,reminder_minutes:remVal,reminder_notified:false,
-    created_by:currentUser,created_at:new Date().toISOString().slice(0,16).replace('T',' '),
-  };
+  const rv=parseInt(document.getElementById('fReminder').value)||0;
+  const obj={date,time,title,type:curType,period:curPeriod,customer_name:document.getElementById('fCustomer').value.trim(),customer_phone:document.getElementById('fPhone').value.trim(),assignee:document.getElementById('fAssignee').value,description:document.getElementById('fDesc').value.trim(),reminder_enabled:rv>0,reminder_minutes:rv,reminder_notified:false,created_by:currentUser,created_at:new Date().toISOString().slice(0,16).replace('T',' ')};
   try{
-    if(editingId){
-      await supaFetch('/events?id=eq.'+editingId,{method:'PATCH',body:JSON.stringify(obj)});
-    }else{
-      obj.id = crypto.randomUUID().slice(0,8);
-      await supaFetch('/events',{method:'POST',body:JSON.stringify(obj)});
-    }
+    if(editingId){await db.collection('events').doc(editingId).update(obj)}
+    else{await db.collection('events').add(obj)}
     closeModal();await fetchEvents();
-  }catch(e){toast('保存失败，请检查网络');}
+  }catch(e){toast('保存失败：'+e.message)}
 };
-
 window.deleteEvent=async function(id){
   if(!confirm('确认删除？'))return;
-  try{await supaFetch('/events?id=eq.'+id,{method:'DELETE'});await fetchEvents();}catch(e){toast('删除失败');}
+  try{await db.collection('events').doc(id).remove();await fetchEvents()}catch(e){toast('删除失败')}
 };
 
 // ====== 提醒 ======
 let notifiedSet=new Set();
 function startReminderChecker(){setInterval(checkReminders,30000);checkReminders()}
 async function checkReminders(){
-  if(!SUPABASE_URL)return;
-  const now=new Date();
+  if(!db)return;const now=new Date();
   for(const e of allEvents){
-    if(!e.reminder_enabled||e.reminder_notified||notifiedSet.has(e.id))continue;
+    if(!e.reminder_enabled||e.reminder_notified||notifiedSet.has(e._id))continue;
     const et=new Date(e.date+'T'+(e.time||'09:00')+':00');
     const diff=(et.getTime()-now.getTime())/60000;
     if(diff<=e.reminder_minutes&&diff>-5){
-      notifiedSet.add(e.id);
-      await supaFetch('/events?id=eq.'+e.id,{method:'PATCH',body:JSON.stringify({reminder_notified:true})}).catch(()=>{});
+      notifiedSet.add(e._id);
+      db.collection('events').doc(e._id).update({reminder_notified:true}).catch(()=>{});
       if(Notification.permission==='granted')new Notification('📅 日历提醒',{body:`${e.title} - ${e.customer_name||''} (${e.period==='morning'?'上午':e.period==='afternoon'?'下午':'全天'})`});
       toast('⏰ '+e.title);
     }

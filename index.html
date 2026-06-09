@@ -290,7 +290,7 @@ window.deleteEventConfirm = async function(id) {
 
 <script>
 // ====== 状态 ======
-let app = null, db = null;
+let app = null, db = null, useAccessKey = false;
 let curY, curM, selDate = null, editingId = null, curType = 'shooting', curPeriod = 'morning';
 let allEvents = [], allUsers = [], currentUser = null;
 
@@ -304,13 +304,26 @@ async function initTCB(envId, accessKey) {
   const cfg = { env: envId };
   if (accessKey) cfg.accessKey = accessKey;
   app = cloudbase.init(cfg);
+  db = app.database();
   // 尝试匿名登录（如果没给 Publishable Key）
   if (!accessKey) {
-    try { await app.auth.signInAnonymously(); } catch(e) {
+    try {
+      const loginState = await app.auth().getLoginState();
+      if (!loginState) await app.auth().signInAnonymously();
+    } catch(e) {
       throw new Error('登录失败。请在 CloudBase 控制台生成 Publishable Key（环境→API Key），或开启匿名登录（环境→登录授权）');
     }
   }
-  db = app.database();
+  useAccessKey = !!accessKey;
+}
+
+// 确保登录态有效（匿名登录过期时自动续期）
+async function ensureAuth() {
+  if (useAccessKey) return;
+  try {
+    const state = await app.auth().getLoginState();
+    if (!state) await app.auth().signInAnonymously();
+  } catch(e) {}
 }
 
 // ====== 内置配置 ======
@@ -387,6 +400,7 @@ window.doLogin = async function() {
   const u = document.getElementById('loginUser').value.trim(), p = document.getElementById('loginPass').value.trim();
   if (!u || !p) { document.getElementById('authErr').textContent = '请填写用户名和密码'; return; }
   try {
+    await ensureAuth();
     const hash = await sha256(p);
     const res = await db.collection('users').where({ username: u, password_hash: hash }).get();
     if (!res.data || res.data.length === 0) { document.getElementById('authErr').textContent = '用户名或密码错误'; return; }
@@ -400,6 +414,7 @@ window.doRegister = async function() {
   if (p !== p2) { document.getElementById('authErr').textContent = '两次密码不一致'; return; }
   if (p.length < 3) { document.getElementById('authErr').textContent = '密码至少3位'; return; }
   try {
+    await ensureAuth();
     const exist = await db.collection('users').where({ username: u }).get();
     if (exist.data && exist.data.length > 0) { document.getElementById('authErr').textContent = '用户名已存在'; return; }
     await db.collection('users').add({ username: u, password_hash: await sha256(p), created_at: new Date().toISOString() });
@@ -424,6 +439,7 @@ async function enterApp() {
 
 async function loadUsers() {
   try {
+    await ensureAuth();
     const res = await db.collection('users').field({ username: true }).get();
     allUsers = (res.data || []).map(u => u.username);
     const sel = document.getElementById('fAssignee');
@@ -434,6 +450,7 @@ async function loadUsers() {
 async function fetchEvents() {
   const ms = `${curY}-${String(curM + 1).padStart(2, '0')}`;
   try {
+    await ensureAuth();
     const res = await db.collection('events')
       .where({ date: db.RegExp({ regexp: `^${ms}-\\d+$`, options: 'i' }) }).get();
     allEvents = res.data || [];
@@ -535,6 +552,7 @@ window.submitEvent = async function() {
   const rv = parseInt(document.getElementById('fReminder').value) || 0;
   const obj = { date, time, title, type: curType, period: curPeriod, customer_name: document.getElementById('fCustomer').value.trim(), customer_phone: document.getElementById('fPhone').value.trim(), assignee: document.getElementById('fAssignee').value, description: document.getElementById('fDesc').value.trim(), reminder_enabled: rv > 0, reminder_minutes: rv, reminder_notified: false, created_by: currentUser, created_at: new Date().toISOString().slice(0, 16).replace('T', ' ') };
   try {
+    await ensureAuth();
     if (editingId) { await db.collection('events').doc(editingId).update(obj); }
     else { await db.collection('events').add(obj); }
     closeModal(); await fetchEvents();
@@ -542,7 +560,7 @@ window.submitEvent = async function() {
 };
 window.deleteEvent = async function(id) {
   if (!confirm('确认删除？')) return;
-  try { await db.collection('events').doc(id).remove(); await fetchEvents(); } catch(e) { toast('删除失败：' + e.message); }
+  try { await ensureAuth(); await db.collection('events').doc(id).remove(); await fetchEvents(); } catch(e) { toast('删除失败：' + e.message); }
 };
 
 // ====== 提醒 ======
@@ -556,7 +574,9 @@ async function checkReminders() {
     const diff = (et.getTime() - now.getTime()) / 60000;
     if (diff <= e.reminder_minutes && diff > -5) {
       notifiedSet.add(e._id);
-      db.collection('events').doc(e._id).update({ reminder_notified: true }).catch(() => {});
+      ensureAuth().then(() => {
+        db.collection('events').doc(e._id).update({ reminder_notified: true }).catch(() => {});
+      });
       if (Notification.permission === 'granted') new Notification('日历提醒', { body: `${e.title} - ${e.customer_name || ''} (${e.period === 'morning' ? '上午' : e.period === 'afternoon' ? '下午' : '全天'})` });
       toast('⏰ ' + e.title);
     }

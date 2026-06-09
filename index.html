@@ -216,9 +216,77 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 <div class="fg"><label>备注</label><textarea id="fDesc" placeholder="补充说明..."></textarea></div>
 <div class="modal-actions"><button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" id="modalSubmit" onclick="submitEvent()">保存</button></div>
 </div></div>
+<div class="modal-overlay" id="selModalOverlay"><div class="modal-sheet">
+<h2 id="selModalTitle">选择选片日期</h2>
+<div class="fg"><label>选片日期</label><input type="date" id="selDate"></div>
+<div class="fg" style="margin-top:8px"><label>选片时间(可选)</label><input type="time" id="selTime"></div>
+<div class="modal-actions" style="margin-top:18px">
+<button class="btn" onclick="closeSelModal()">取消</button>
+<button class="btn btn-primary" onclick="submitSelection()">确认</button>
+</div>
+</div></div>
 <div class="toast" id="toast"></div>
 
-<script src="https://static.cloudbase.net/cloudbase-js-sdk/2.28.6/cloudbase.full.js"></script>
+<script src="https://static.cloudbase.net/cloudbase-js-sdk/2.28.6/cloudbase.full.js">
+// ====== 选片功能 ======
+let selTargetEventId = null;
+window.openSelectionModal = function(eventId) {
+  selTargetEventId = eventId;
+  const ev = allEvents.find(e => e._id === eventId);
+  document.getElementById('selModalTitle').textContent = '选择选片日期 - ' + (ev ? ev.title : '');
+  document.getElementById('selDate').value = todayStr;
+  document.getElementById('selModalOverlay').classList.add('active');
+};
+window.closeSelModal = function() { document.getElementById('selModalOverlay').classList.remove('active'); selTargetEventId = null; };
+window.submitSelection = async function() {
+  const selDateVal = document.getElementById('selDate').value;
+  const selTimeVal = document.getElementById('selTime').value;
+  if (!selDateVal) { toast('请选择选片日期'); return; }
+  const ev = allEvents.find(e => e._id === selTargetEventId);
+  if (!ev) { toast('事件不存在'); return; }
+  try {
+    const selTitle = '选片 - ' + ev.title;
+    const selData = {
+      type: 'selection', date: selDateVal, time: selTimeVal, title: selTitle,
+      customer_name: ev.customer_name || '', customer_phone: ev.customer_phone || '',
+      assignee: ev.assignee || '', period: ev.period || 'fullday', description: '',
+      reminder_enabled: false, reminder_minutes: 0,
+      selection_for: selTargetEventId,
+      created_by: currentUser,
+      created_at: new Date().toISOString().slice(0, 16).replace('T', ' ')
+    };
+    const existingSel = allEvents.find(e => e.type === 'selection' && (e.selection_for === selTargetEventId || e.title === selTitle));
+    if (existingSel) {
+      selData.replaces = existingSel._id;
+    }
+    await db.collection('events').add(selData);
+    closeSelModal();
+    await fetchEvents();
+    toast('选片已安排');
+  } catch(e) { toast('操作失败：' + e.message); }
+};
+document.getElementById('selModalOverlay').addEventListener('click', function(e) { if (e.target === this) closeSelModal(); });
+
+// 删除确认（仅创建者可触发）
+window.deleteEventConfirm = async function(id) {
+  if (!confirm('确认删除该事件？')) return;
+  try {
+    const oldDoc = await db.collection('events').doc(id).get();
+    if (!oldDoc.data || oldDoc.data.length === 0) { toast('事件不存在，可能已被删除'); return; }
+    const old = oldDoc.data[0];
+    await db.collection('events').add({
+      type: '_tombstone',
+      date: old.date,
+      deletes: id,
+      created_by: currentUser,
+      created_at: new Date().toISOString().slice(0, 16).replace('T', ' ')
+    });
+    allEvents = allEvents.filter(ev => ev._id !== id);
+    render(); if (selDate) showDetail(selDate);
+  } catch(e) { toast('删除失败：' + e.message); }
+};
+
+</script>
 
 <script>
 // ====== 状态 ======

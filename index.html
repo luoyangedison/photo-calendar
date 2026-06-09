@@ -313,13 +313,12 @@ async function initTCB(envId, accessKey) {
   db = app.database();
 }
 
+// ====== 内置配置 ======
+const BUILTIN_ENV = 'sugarkids-calendar-d5cqlca3363d8';
+
 // ====== 配置检测 ======
 function checkConfig() {
-  const envId = localStorage.getItem('tcb_env') || '';
-  if (!envId) {
-    document.getElementById('setupPage').style.display = 'flex';
-    return false;
-  }
+  const envId = localStorage.getItem('tcb_env') || BUILTIN_ENV;
   document.getElementById('setupPage').style.display = 'none';
   return envId;
 }
@@ -350,6 +349,9 @@ window.resetConfig = function() {
   document.getElementById('app').classList.remove('active');
   document.getElementById('authPage').style.display = 'none';
   document.getElementById('setupPage').style.display = 'flex';
+  document.getElementById('tcbEnvId').value = BUILTIN_ENV;
+  document.getElementById('tcbKey').value = '';
+  document.getElementById('setupErr').textContent = '';
 };
 
 // ====== 启动 ======
@@ -362,7 +364,8 @@ window.resetConfig = function() {
     init();
   } catch(e) {
     document.getElementById('setupPage').style.display = 'flex';
-    document.getElementById('setupErr').textContent = '连接失败：' + e.message + ' 请点击"重新绑定"检查配置';
+    document.getElementById('tcbEnvId').value = envId;
+    document.getElementById('setupErr').textContent = '连接失败：' + e.message;
   }
 })();
 

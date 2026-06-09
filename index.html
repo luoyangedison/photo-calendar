@@ -304,16 +304,21 @@ async function initTCB(envId, accessKey) {
   const cfg = { env: envId };
   if (accessKey) cfg.accessKey = accessKey;
   app = cloudbase.init(cfg);
-  db = app.database();
-  // 尝试匿名登录（如果没给 Publishable Key）
+  // 匿名登录必须在 db = app.database() 之前，否则 DB 实例会捕获空的 auth 状态
   if (!accessKey) {
     try {
-      const loginState = await app.auth().getLoginState();
-      if (!loginState) await app.auth().signInAnonymously();
+      await app.auth().signInAnonymously();
+      // 等待登录态就绪（SDK 内部可能异步写入 credential）
+      for (let i = 0; i < 8; i++) {
+        const state = await app.auth().getLoginState();
+        if (state) break;
+        await new Promise(r => setTimeout(r, 250));
+      }
     } catch(e) {
       throw new Error('登录失败。请在 CloudBase 控制台生成 Publishable Key（环境→API Key），或开启匿名登录（环境→登录授权）');
     }
   }
+  db = app.database();
   useAccessKey = !!accessKey;
 }
 
